@@ -18,30 +18,34 @@ const BookSchema = new mongoose.Schema({
         trim: true
     },
     category: {
-        type: String,
-        trim: true,
+        type: [{
+            type: String,
+            trim: true,
+            enum: [
+                "Fiction",
+                "Mystery",
+                "Thriller",
+                "Romance",
+                "Fantasy",
+                "Science Fiction",
+                "Biography",
+                "History",
+                "Technology"
+            ],
+        }],
         required: true,
-        enum: [
-            "Fiction",
-            "Mystery",
-            "Thriller",
-            "Romance",
-            "Fantasy",
-            "Science Fiction",
-            "Biography",
-            "History",
-            "Technology"
-        ],
     },
     quantity: {
         type: Number,
         required: true,
         min: 0,
+        default: 0,
     },
     availableQuantity: {
         type: Number,
         required: true,
         min: 0,
+        default: 0,
     }
 }, {
     timestamps: true,
