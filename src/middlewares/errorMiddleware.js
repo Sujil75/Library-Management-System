@@ -1,0 +1,13 @@
+const errorMiddleware = (err, req, res, next) => {
+    console.error(err);
+
+    const statusCode = err.status || 500
+
+    res.status(statusCode).json({
+        success: false,
+        status: statusCode,
+        message: err.message || "Internal service error",
+    });
+};
+
+module.exports = errorMiddleware
