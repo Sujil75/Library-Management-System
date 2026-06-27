@@ -33,7 +33,8 @@ module.exports.addBook = async (req, res, next) => {
 
 module.exports.fetchBooks = async (req, res, next) => {
     try {
-        const book = await getBookList();
+        const {page, limit, search, category} = req.query;
+        const book = await getBookList(page, limit, search, category);
 
         res.status(200).json({
             success: true,

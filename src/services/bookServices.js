@@ -16,8 +16,26 @@ module.exports.createBook = async body => {
     return "Book added successfully";
 };
 
-module.exports.getBookList = async () => {
-    const books = await Book.find();
+module.exports.getBookList = async (page = 1, limit = 10, search, category) => {
+    page = Number(page);
+    limit = Number(limit);
+
+    const filter = {};
+
+    if (search) {
+        filter.title = {
+            $regex: search,
+            $options: "i",
+        };
+    };
+
+    if (category) {
+        filter.category = category;
+    };
+
+    const books = await Book.find(filter)
+        .skip((page - 1) * limit)
+        .limit(limit);
 
     if (books.length === 0) {
         const err = new Error("No books found");
@@ -104,7 +122,7 @@ module.exports.borrowBook = async (bookId, memberId) => {
         throw err;
     };
 
-    if (book.availableQuantity === 0) {
+    if (book.availableQuantity <= 0) {
         const err = new Error("Book is currently unavailable");
         err.status = 404;
         

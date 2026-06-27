@@ -1,5 +1,5 @@
 const errorMiddleware = (err, req, res, next) => {
-    console.error(err);
+    // console.error(err);
 
     const statusCode = err.status || 500
 
