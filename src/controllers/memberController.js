@@ -1,6 +1,7 @@
 const {
     fetchMembers,
-    removeMember
+    removeMember,
+    booksBorrowed
 } = require("../services/memberServices");
 
 module.exports.getMembers = async (req, res, next) => {
@@ -37,6 +38,21 @@ module.exports.deleteMember = async (req, res, next) => {
             message,
         });
     } catch (err) {
+        next(err);
+    };
+};
+
+module.exports.memberBorrowed = async (req, res, next) => {
+    try {
+        const member = await booksBorrowed();
+
+        res.status(200).json({
+            success: true,
+            status: 200,
+            message: member.message,
+            data: member.data
+        });
+    } catch(err) {
         next(err);
     };
 };

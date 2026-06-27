@@ -3,7 +3,9 @@ const {
     getBookList, 
     getBook, 
     updateBook, 
-    removeBook
+    removeBook,
+    borrowBook,
+    returnBook
 } = require("../services/bookServices");
 
 module.exports.addBook = async (req, res, next) => {
@@ -108,3 +110,52 @@ module.exports.deleteBook = async (req, res, next) => {
     };
 };
 
+// Borrow book
+module.exports.memberBorrow = async (req, res, next) => {
+    try {
+        const bookId = req.params.id;
+        const memberId = req.user.id;
+
+        if (!bookId) {
+            const err = new Error("Provide a valid ID");
+            err.status = 405;
+
+            throw err;
+        };
+
+        const message = await borrowBook(bookId, memberId);
+
+        res.status(200).json({
+            success: true,
+            status: 200,
+            message,
+        });
+    } catch(err) {
+        next(err);
+    };
+};
+
+// Return book
+module.exports.memberReturn = async (req, res, next) => {
+    try {
+        const bookId = req.params.id;
+        const memberId = req.user.id;
+
+        if (!bookId) {
+            const err = new Error("Provide a valid ID");
+            err.status = 405;
+
+            throw err;
+        };
+
+        const message = await returnBook(bookId, memberId);
+
+        res.status(200).json({
+            success: true,
+            status: 200,
+            message,
+        });
+    } catch(err) {
+        next(err);
+    };
+};

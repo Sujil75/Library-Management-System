@@ -4,7 +4,9 @@ const {
     fetchBooks, 
     fetchSingleBook, 
     putBook, 
-    deleteBook
+    deleteBook,
+    memberBorrow,
+    memberReturn
 } = require('../controllers/bookController');
 const { bookValidation, validate } = require('../validators/validationRules');
 const userAuthenticator = require('../middlewares/authMiddleware');
@@ -22,5 +24,12 @@ router.get('/:id', userAuthenticator, roleMiddleware("Librarian", "Member"), fet
 router.put('/:id', userAuthenticator, roleMiddleware("Librarian"), bookValidation, validate, putBook);
 
 router.delete("/:id", userAuthenticator, roleMiddleware("Librarian"), deleteBook);
+
+// Borrow book(s)
+router.post("/:id/borrow", userAuthenticator, roleMiddleware("Member"), memberBorrow);
+
+// Return book
+router.post("/:id/return", userAuthenticator, roleMiddleware("Member"), memberReturn);
+
 
 module.exports = router;

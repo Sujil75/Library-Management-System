@@ -1,3 +1,4 @@
+const Borrow = require('../models/Borrow');
 const User = require('../models/User');
 
 module.exports.fetchMembers = async () => {
@@ -39,5 +40,21 @@ module.exports.removeMember = async (id) => {
 
     await User.findByIdAndDelete(id);
 
-    return "Member deleted successfully";
+    return `Member ${member.name} deleted successfully`;
+};
+
+module.exports.booksBorrowed = async () => {
+    const borrowedBooks = await Borrow.find({status: "Borrowed"});
+
+    if (borrowedBooks.length === 0) {
+        const err = new Error("You have not borrowed any book");
+        err.status = 404;
+        
+        throw err;
+    };
+
+    return {
+        message: "Your borrowed books list",
+        data: borrowedBooks,
+    };
 };
