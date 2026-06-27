@@ -13,7 +13,7 @@ app.use(cors());
 
 app.use("/api/auth", authRoutes);
 
-app.use("/api/books", authMembers);
+app.use("/api", authMembers);
 
 app.use(errorMiddleware);
 
