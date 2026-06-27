@@ -7,6 +7,7 @@ const errorMiddleware = (err, req, res, next) => {
         success: false,
         status: statusCode,
         message: err.message || "Internal service error",
+        errors: err.errors || [],
     });
 };
 
