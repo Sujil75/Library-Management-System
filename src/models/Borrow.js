@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const BorrowSchema = new mongoose.Schema({
     memberId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Member",
+        ref: "User",
         required: true,
     },
     bookId: {
@@ -18,6 +18,8 @@ const BorrowSchema = new mongoose.Schema({
     },
     returnDate: {
         type: Date,
+        trim: true,
+        default: Date.now,
     },
     status: {
         type: String,
