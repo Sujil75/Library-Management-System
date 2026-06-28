@@ -227,7 +227,7 @@ MONGODB_URI=your_mongodb_connection_string
 
 JWT_SECRET=your_secret_key
 
-DNS_PORT=8.8.8.8,8.8.4.4
+DNS_PORT=0.0.0.0,1.1.1.1
 ```
 
 ---
